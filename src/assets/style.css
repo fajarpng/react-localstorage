@@ -10,6 +10,7 @@ html, body, #root {
        to top right, #1aab6c, #142196
 
     );
+    background-position: fixed;
 }
 .bg-trans {
     background-color: rgba(0, 0, 0, 0.3);
