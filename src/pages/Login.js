@@ -19,13 +19,13 @@ class Login extends Component{
                         <div className=' text-light border-bottom pb-2 mb-3 h3'>Welcome</div>
                         <div>
                             <label className=' text-info'>Username</label>
-                            <Input type='text' className='rounded-0 border-0 bg-trans mb-3' 
+                            <Input type='text' className='rounded-0 border-0 bg-trans mb-3 text-light' 
                                 onChange = {(e) => (this.setState({name: e.target.value})) }
                             />
                         </div>
                         <div>
                             <label className=' text-info'>Password</label>
-                            <Input type='password' className='mb-3 rounded-0 border-0 bg-trans'/>
+                            <Input type='password' className='mb-3 rounded-0 border-0 bg-trans text-light'/>
                         </div>
                         <Link to={{
                             pathname: '/home',

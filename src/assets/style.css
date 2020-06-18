@@ -14,3 +14,7 @@ html, body, #root {
 .bg-trans {
     background-color: rgba(0, 0, 0, 0.3);
 }
+
+input[type="text"]:focus, input[type="password"]:focus {
+    background-color: rgba(0, 0, 0, 0.3);
+}
