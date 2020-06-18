@@ -12,7 +12,7 @@ class Login extends Component{
     render(){
         return(
             <>
-             <Row id='grad' className='h-100 d-flex justify-content-center'>
+             <Row id='grad' className='h-100 d-flex justify-content-center h-100'>
                  <Col sm='8' md='8' lg='4' className='d-flex flex-column justify-content-center'>
                     <div className='d-flex flex-column justify-content-between bg-trans p-3 w-100'>
                         <div className='text-info display-3 mb-3'> LOGIN </div>
