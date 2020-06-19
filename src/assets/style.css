@@ -4,12 +4,12 @@ html, body, #root {
     padding: 0;
     margin: 0;
 }
-
-#grad {
+body {
     background-image: linear-gradient(
        to top right, #1aab6c, #142196
 
     );
+    background-position: fixed;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }

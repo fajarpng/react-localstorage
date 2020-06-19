@@ -7,47 +7,51 @@ class Login extends Component{
         super(props)
         this.state = {
             name : null,
-            email : null,
-            phone : null
+            pass : null,
+            isError : false
         }
     }
+
+    handleSubmit = (e) =>{
+        e.preventDefault()
+        const username = localStorage.getItem('name')
+        const pass = localStorage.getItem('pass')
+        if( ( this.state.pass === pass ) && ( this.state.name === username ) ){
+            localStorage.setItem('token', true)
+            this.props.history.push('/home') 
+        } else { this.setState( { isError: true } ) }
+    }
+    componentDidMount () {
+        if(localStorage.getItem('token')){
+            this.props.history.push('/home')
+        } else { this.props.history.push('/login')}
+    }
     render(){
+        const isError = this.state.isError
         return(
             <>
              <Row id='grad' className='h-100 d-flex justify-content-center'>
                  <Col sm='8' md='8' lg='4' className='d-flex flex-column justify-content-center'>
-                    <div className='d-flex flex-column justify-content-between bg-trans p-3 w-100'>
-                        <div className='text-info display-3 mb-3'> REGISTER </div>
+                    <form className='d-flex flex-column justify-content-between bg-trans p-3 w-100' onSubmit={this.handleSubmit}>
+                        <div className='text-info display-3 mb-3'> LOGIN </div>
                         <div className=' text-light border-bottom pb-2 mb-3 h3 font-weight-light'>Welcome</div>
+                        { isError && 
+                            <div className='text-warning h5 font-weight-light mb-3'> Username or password incorect !</div>
+                        }
                         <div>
-                            <label className=' text-info'>Username</label>
+                            <label className=' text-info h5 font-weight-light'>Username</label>
                             <Input type='text' className='rounded-0 border-0 bg-trans mb-3 text-light' 
                                 onChange = {(e) => (this.setState({name: e.target.value})) }
                             />
                         </div>
                         <div>
-                            <label className=' text-info'>Email</label>
-                            <Input type='text' className='mb-3 rounded-0 border-0 bg-trans text-light'
-                                onChange = {(e) => (this.setState({email: e.target.value})) }
+                            <label className='text-info h5 font-weight-light'>Password</label>
+                            <Input type='password' className='mb-3 rounded-0 border-0 bg-trans text-light'
+                                onChange = {(e) => (this.setState({pass: e.target.value})) }
                             />
                         </div>
-                        <div>
-                            <label className=' text-info'>Phone</label>
-                            <Input type='text' className='mb-3 rounded-0 border-0 bg-trans text-light'
-                                onChange = {(e) => (this.setState({phone: e.target.value})) }
-                            />
-                        </div>
-                        <Link to={{
-                            pathname: '/home',
-                            state: {
-                                name: this.state.name,
-                                email: this.state.email,
-                                phone: this.state.phone
-                            }
-                            }}>
-                            <Input type='submit' value='REGISTER' className='btn-info mt-3 rounded-0'/>
-                        </Link>
-                    </div>
+                        <Input type='submit' value='REGISTER' className='btn-info mt-3 rounded-0'/>
+                    </form>
                  </Col>
              </Row>
             </>
