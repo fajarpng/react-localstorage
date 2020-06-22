@@ -11,37 +11,40 @@ class Register extends Component{
             pass : ''
         }
     }
+
     formValid = (e) => {
         e.preventDefault()
 
-        const name = this.state.name
-        const email = this.state.email
-        const pass = this.state.pass
-        const phone = this.state.phone
+        const {name, email, pass, phone} = this.state
 
-        if(name !== '' && email !== '' && pass !== '' && phone !== ''){
-            this.passValid()
-        } else { this.setState ({isError : true, msg : 'All form must be filled'})}
+        if ( name !== '' && email !== '' && pass !== '' && phone !== '' ) {
+            if ( !localStorage.getItem(name) ) {
+                this.passValid()
+            } else {
+                this.setState ({isError : true, msg : 'Username alredy exsist, try another name'} )
+            }
+        } else { this.setState ({isError : true, msg : 'All form must be filled'} ) }
     }
+
     passValid = () => {
         const pass = this.state.pass
 
         if (!( pass.match(/^(?=.*[0-9])(?=.*[#@!$%&?]){8,}/) ) ) {
-            this.setState ({isError : true, msg : 'Password min 8 character, and must contain number and symbol " # @ ! $ % & ? " !'})
+            this.setState ({isError : true, msg : 'Password min 8 character, and must contain number and symbol ( #/@/!/$/%/&/? ) !!'})
         } else { this.handleSubmit() }
     }
+
     handleSubmit = () =>{
-        localStorage.setItem('name', this.state.name)
-        localStorage.setItem('email', this.state.email)
-        localStorage.setItem('phone',this.state.phone)
-        localStorage.setItem('pass', this.state.pass)
+        const {name, email, pass, phone} = this.state
+
+        localStorage.setItem(name, JSON.stringify({name, email, phone, pass}))
         this.props.history.push('/login')
     }
 
     componentDidMount () {
         if(localStorage.getItem('token')){
-            this.props.history.push('/home')
-        } else { this.props.history.push('/')}
+            this.props.history.goBack()
+        }
     }
 
     render(){

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
 import {Row, Col, Input} from 'reactstrap'
 
 class Login extends Component{
@@ -7,25 +6,30 @@ class Login extends Component{
         super(props)
         this.state = {
             name : null,
-            pass : null,
+            pass : '',
             isError : false
         }
     }
 
     handleSubmit = (e) =>{
         e.preventDefault()
-        const username = localStorage.getItem('name')
-        const pass = localStorage.getItem('pass')
-        if( ( this.state.pass === pass ) && ( this.state.name === username ) ){
+
+        const data = JSON.parse( localStorage.getItem(this.state.name) )
+        const pass = this.state.pass
+        const name = this.state.name
+
+        if( ( name === data.name ) && ( pass === data.pass ) ){
             localStorage.setItem('token', true)
-            this.props.history.push('/home') 
+            this.props.history.push(`/home/${data.name}`) 
         } else { this.setState( { isError: true } ) }
     }
+
     componentDidMount () {
         if(localStorage.getItem('token')){
-            this.props.history.push('/home')
-        } else { this.props.history.push('/login')}
+            this.props.history.goBack()
+        }
     }
+
     render(){
         const isError = this.state.isError
         return(
